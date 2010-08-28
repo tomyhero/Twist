@@ -1,0 +1,6 @@
+[% INCLUDE header.inc %]
+<div id="map_canvas"></div>
+[% FOREACH user IN users %]
+[% user.screen_name | html %] - [% user.text | html %]<br />
+[% END %]
+[% INCLUDE footer.inc %]

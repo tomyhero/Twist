@@ -50,9 +50,10 @@ sub run {
                         geohash => $geo_hash,
                         text => $tweet->{text},
                     });
+                    warn 'posted by:' . $tweet->{user}{screen_name};
                 }
                 else {
-                    warn 'no geo support:' . $tweet->{user}{screen_name};
+                    #warn 'no geo support:' . $tweet->{user}{screen_name};
                 }
             },
             on_error => sub {

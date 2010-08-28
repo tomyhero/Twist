@@ -28,4 +28,18 @@ sub logging {
     $sth->finish;
 }
 
+sub recent {
+    my $self = shift;
+    my $driver = $self->driver;
+    my $sth = $driver->dbh->prepare("SELECT * FROM tweet GROUP BY screen_name having max(created_at)");
+    $sth->execute();
+    my @data = ();
+    while(my $row = $sth->fetchrow_hashref()){
+        push @data,$row;
+    }
+    $sth->finish;
+    return \@data;     
+}
+
+
 __POLOCKY__ ;
