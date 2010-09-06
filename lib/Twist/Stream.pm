@@ -22,9 +22,12 @@ sub run {
     my $twitter_auth = $self->config->twitter_auth;
     my $followers = $self->config->followers;
     my $twitter = Net::Twitter->new (
-            traits   => [qw/API::REST/],
+            traits   => [qw/API::REST OAuth/],
             %$twitter_auth,
             );
+
+    $twitter->access_token($twitter_auth->{access_token});
+    $twitter->access_token_secret($twitter_auth->{access_token_secret});
 
     my $users = $twitter->lookup_users( screen_name => join(",", @$followers) ) ;
     my @ids = map { $_->{id} } @$users;
@@ -53,7 +56,7 @@ sub run {
                     warn 'posted by:' . $tweet->{user}{screen_name};
                 }
                 else {
-                    #warn 'no geo support:' . $tweet->{user}{screen_name};
+                    warn 'no geo support:' . $tweet->{user}{screen_name};
                 }
             },
             on_error => sub {

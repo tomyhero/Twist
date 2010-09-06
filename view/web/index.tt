@@ -1,6 +1,76 @@
 [% INCLUDE header.inc %]
 <div id="map_canvas"></div>
+<script>
+function drawMap(tweets) {
+    var map ;
+    if(tweets.length) {
+        var tweet = tweets[0];
+        var myLatlng = new google.maps.LatLng(tweet.lat ,tweet.lon);
+        var myOptions = {
+        zoom:10,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    }
+    else {
+        var myLatlng = new google.maps.LatLng(35.40, 139.46);
+        var myOptions = {
+        zoom:5,
+        center: myLatlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    }
+
+    for( var i in tweets ) {
+        setMarker(map,tweets[i]);
+    }
+}
+
+function setMarker(map,tweet){
+        var marker = new google.maps.Marker({
+            position: new google.maps.LatLng( tweet.lat ,tweet.lon ),
+            map: map, 
+            icon: new google.maps.MarkerImage(
+                    'http://usericons.relucks.org/twitter/' + tweet.screen_name,
+                    new google.maps.Size(22, 22),
+                    new google.maps.Point(0,0),  
+                    new google.maps.Point(16,16), 
+                    new google.maps.Size(22, 22)
+                 ),
+            title: tweet.screen_name
+        });
+
+        var infowindow = new google.maps.InfoWindow({
+            content: tweet.created_at + '<br>' + tweet.text 
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map,marker);
+        });
+}
+
+function loadMap(){
+    jQuery.get('/api/recent/',{},function(json) {
+        if(json.result == 'ok') {
+            drawMap(json.tweets);
+        }
+        else {
+            return [];
+        }
+    },'json');
+}
+
+loadMap();
+
+
+</script>
+
+<div id="debug">
 [% FOREACH user IN users %]
 [% user.screen_name | html %] - [% user.text | html %]<br />
 [% END %]
+</div>
+
 [% INCLUDE footer.inc %]
