@@ -1,5 +1,9 @@
 [% INCLUDE header.inc %]
+[% profile(screen_name) %]
+<div id="created_at"></div>
+<div id="tweet_body"></div>
 <div id="map_canvas"></div>
+
 <script>
 function drawMap(tweets) {
     var map ;
@@ -7,7 +11,7 @@ function drawMap(tweets) {
         var tweet = tweets[0];
         var myLatlng = new google.maps.LatLng(tweet.lat ,tweet.lon);
         var myOptions = {
-        zoom:10,
+        zoom:12,
         center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
         };
@@ -16,31 +20,34 @@ function drawMap(tweets) {
     else {
         var myLatlng = new google.maps.LatLng(35.40, 139.46);
         var myOptions = {
-        zoom:5,
+        zoom:12,
         center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
     }
 
-    for( var i in tweets ) {
-        setMarker(map,tweets[i]);
-    }
+    setInterval(function(){ setMarker(map,tweets); },1000);
 }
 
-function setMarker(map,tweet){
+function setMarker(map,tweets){
+
+        if (tweets.length == 0 ){
+            clearInterval();
+            return ;
+        }
+
+        var tweet = tweets.shift();
+        $('#tweet_body').text(tweet.text);
+        $('#created_at').text(tweet.created_at);
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng( tweet.lat ,tweet.lon ),
             map: map, 
-            icon: new google.maps.MarkerImage(
-                    'http://usericons.relucks.org/twitter/' + tweet.screen_name,
-                    new google.maps.Size(22, 22),
-                    new google.maps.Point(0,0),  
-                    new google.maps.Point(16,16), 
-                    new google.maps.Size(22, 22)
-                 ),
-            title: tweet.screen_name
+            title: tweet.created_at
         });
+
+        var myLatlng = new google.maps.LatLng(tweet.lat, tweet.lon);
+        map.panTo(myLatlng);
 
         var infowindow = new google.maps.InfoWindow({
             content: tweet.created_at + '<br>' + tweet.text + '<br><a href="/user/' + tweet.screen_name + '/">more...</a>'
@@ -52,7 +59,7 @@ function setMarker(map,tweet){
 }
 
 function loadMap(){
-    jQuery.get('/api/recent/',{},function(json) {
+    jQuery.get('/api/user_recent/',{ screen_name : '[% screen_name %]' },function(json) {
         if(json.result == 'ok') {
             drawMap(json.tweets);
         }
@@ -67,10 +74,5 @@ loadMap();
 
 </script>
 
-<div id="debug">
-[% FOREACH user IN users %]
-[% user.screen_name | html %] - [% user.text | html %]<br />
-[% END %]
-</div>
 
 [% INCLUDE footer.inc %]

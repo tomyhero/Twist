@@ -12,4 +12,14 @@ sub recent :Local :Plugin('~JSON') {
     };
 }
 
+sub user_recent :Local :Plugin('~JSON') {
+    my ( $self , $c ) = @_;
+    my $tweets = con('db')->user_recent( $c->req->param('screen_name') );
+    $c->stash->{json} = {
+        result => 'ok',
+        tweets => $tweets,
+    };
+
+}
+
 __POLOCKY__;

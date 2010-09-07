@@ -1,5 +1,8 @@
 +{
     default => {
+        'plugins' => [
+            'Polocky::WAF::CatalystLike::Plugin::ShowDispatcher',
+        ],
         'logger' => {
             'dispatchers' => [
                 'screen'
