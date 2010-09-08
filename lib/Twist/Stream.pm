@@ -29,6 +29,12 @@ sub get_members {
         $cursor = $res->{next_cursor};
         last if $cursor == 0;
     }
+    
+    my $extra_members = $self->config->twitter_extra_members;
+    if($extra_members){
+        my $members = $twitter->lookup_users( screen_name => join(",", @$extra_members) ) ;
+        push @data,@$members;
+    }
     return \@data;
 }
 

@@ -32,7 +32,7 @@ sub user_recent {
     my $self = shift;
     my $screen_name = shift;
     my $driver = $self->driver;
-    my $sth = $driver->dbh->prepare("SELECT * FROM tweet WHERE screen_name = ? ORDER BY created_at LIMIT 10");
+    my $sth = $driver->dbh->prepare("SELECT * FROM tweet WHERE screen_name = ? ORDER BY created_at DESC LIMIT 10");
     $sth->execute( $screen_name );
     my @data = ();
     while(my $row = $sth->fetchrow_hashref()){
@@ -45,7 +45,7 @@ sub user_recent {
 sub recent {
     my $self = shift;
     my $driver = $self->driver;
-    my $sth = $driver->dbh->prepare("SELECT * FROM tweet GROUP BY screen_name having max(created_at)");
+    my $sth = $driver->dbh->prepare("SELECT * FROM tweet GROUP BY screen_name having max(created_at) ORDER BY created_at DESC");
     $sth->execute();
     my @data = ();
     while(my $row = $sth->fetchrow_hashref()){
