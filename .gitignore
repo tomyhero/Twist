@@ -11,3 +11,4 @@ MANIFEST.bak
 *.sw[po]
 conf/development.pl
 var/*
+stream.log
