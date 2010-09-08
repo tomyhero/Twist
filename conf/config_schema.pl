@@ -7,7 +7,7 @@
         driver => {
             'type' => 'any'
         },
-        followers => {
+        twitter_list => {
             'type' => 'any'
         }
     }

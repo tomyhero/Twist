@@ -7,9 +7,9 @@ sub twitter_auth {
     $self->_get('twitter_auth');
 }
 
-sub followers {
+sub twitter_list {
     my $self = shift;
-    $self->_get('followers');
+    $self->_get('twitter_list');
 }
 
 sub driver {

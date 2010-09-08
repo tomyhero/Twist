@@ -17,19 +17,33 @@ sub _build_db {
     Twist::DB->new();
 }
 
+sub get_members {
+    my $self    = shift;
+    my $twitter = shift;
+    my $config = $self->config->twitter_list;
+    my $cursor = -1;
+    my @data   = ();
+    while(1){
+        my $res = $twitter->list_members( $config->{owner} , $config->{list_id}, { cursor => $cursor } );
+        push @data , @{ $res->{users} };
+        $cursor = $res->{next_cursor};
+        last if $cursor == 0;
+    }
+    return \@data;
+}
+
 sub run {
     my $self = shift;
     my $twitter_auth = $self->config->twitter_auth;
-    my $followers = $self->config->followers;
     my $twitter = Net::Twitter->new (
-            traits   => [qw/API::REST OAuth/],
+            traits   => [qw/API::REST API::Lists OAuth/],
             %$twitter_auth,
             );
 
     $twitter->access_token($twitter_auth->{access_token});
     $twitter->access_token_secret($twitter_auth->{access_token_secret});
 
-    my $users = $twitter->lookup_users( screen_name => join(",", @$followers) ) ;
+    my $users = $self->get_members( $twitter );
     my @ids = map { $_->{id} } @$users;
 
     my $done = AnyEvent->condvar;
