@@ -12,3 +12,4 @@ MANIFEST.bak
 conf/development.pl
 var/*
 stream.log
+twist.sh
