@@ -1,5 +1,17 @@
 +{
     default => {
+        'middlewares' => [
+        {
+            'module' => 'Plack::Middleware::StackTrace',
+        },
+        {
+            'module' => 'Plack::Middleware::Static',
+            'opts' => {
+                'root' => 'view/',
+                'path' => '^/static/'
+            },
+        }
+        ],
         'plugins' => [
             'Polocky::WAF::CatalystLike::Plugin::ShowDispatcher',
         ],

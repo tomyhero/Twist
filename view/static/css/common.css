@@ -1,0 +1,60 @@
+@charst "UTF-8";
+*{
+    margin:0px;
+    padding:0px;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+}
+h1, h2, h3, h4, h5, h6, p, ol, ul, pre, blockquote {
+    margin:0px 0px 10px 0px;
+    font-size: 0.9em;
+}
+
+/* HEADER =============== */
+
+#header-wrapper{background:#2F2F2F}
+#header{background:#333 }
+#logo{color:#FFF}
+#logo a{color:#FFF}
+
+/* FOOTER ================ */
+#footer-wrapper{
+    background:#2F2F2F;
+    color:#fff;
+    font-size:12px;
+    text-align:center;
+}
+#footer-wrapper a{color:#FFF}
+#footer-wrapper address {
+    text-align: right;
+    font-style: normal;
+    color: #eee;
+    font-size:10px;
+}
+
+
+/* CONTENT =============== */
+#content-wrapper{
+
+}
+
+/* MAP ========== */
+#map_canvas {
+    margin-left:auto;
+    margin-right:auto;
+    border: solid 5px #333;
+    width:700px;
+    height:300px;
+}
+
+/* Tweet ============ */
+
+.tweet {
+	margin: 30px 40px 40px;
+	width: 50%;
+    margin-left:auto;
+    margin-right:auto;
+    width:700px;
+}
+

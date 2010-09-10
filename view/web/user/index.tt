@@ -1,8 +1,20 @@
 [% INCLUDE header.inc %]
-[% profile(screen_name) %]
-<div id="created_at"></div>
-<div id="tweet_body"></div>
-<div id="map_canvas"></div>
+
+<div id="content-wrapper">
+    <div id="tweet" class="tweet">
+	    <div class="bubble">
+		    <blockquote>
+			    <p id="tweet_body">Loading... or Nothing...</p>
+		    </blockquote>
+		    <cite><img width="16" height="16" src="http://usericons.relucks.org/twitter/[% screen_name | html %]"> <a target="_blank" href="http://twitter.com/[%  screen_name | html %]/">[% screen_name | html %]</a> at <span id="created_at"></span></cite>
+	    </div>
+    </div>
+
+    <div id="map_canvas"></div>
+
+    <br />
+    <br />
+</div>
 
 <script>
 function drawMap(tweets) {

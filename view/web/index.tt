@@ -1,5 +1,19 @@
 [% INCLUDE header.inc %]
-<div id="map_canvas"></div>
+<div id="content-wrapper">
+    <div id="map_canvas"></div>
+
+    <div id="tweet" class="tweet">
+        [% FOREACH user IN users %]
+	    <div class="bubble">
+		    <blockquote>
+			    <p>[% user.text | html %]</p>
+		    </blockquote>
+		    <cite><img width="16" height="16" src="http://usericons.relucks.org/twitter/[% user.screen_name %]"> <a href="/user/[%  user.screen_name | html %]/">[% user.screen_name | html %]</a> at [% user.created_at %]</cite>
+	    </div>
+        [% END %]
+    </div>
+</div>
+
 <script>
 function drawMap(tweets) {
     var map ;
@@ -7,7 +21,7 @@ function drawMap(tweets) {
         var tweet = tweets[0];
         var myLatlng = new google.maps.LatLng(tweet.lat ,tweet.lon);
         var myOptions = {
-        zoom:10,
+        zoom:11,
         center: myLatlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
         };
@@ -63,14 +77,5 @@ function loadMap(){
 }
 
 loadMap();
-
-
 </script>
-
-<div id="debug">
-[% FOREACH user IN users %]
-[% user.screen_name | html %] - [% user.text | html %]<br />
-[% END %]
-</div>
-
 [% INCLUDE footer.inc %]
