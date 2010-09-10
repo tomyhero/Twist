@@ -32,7 +32,7 @@ sub user_recent {
     my $self = shift;
     my $screen_name = shift;
     my $driver = $self->driver;
-    my $sth = $driver->dbh->prepare("SELECT * FROM tweet WHERE screen_name = ? ORDER BY created_at LIMIT 10");
+    my $sth = $driver->dbh->prepare("SELECT * FROM tweet WHERE screen_name = ? ORDER BY created_at LIMIT 9");
     $sth->execute( $screen_name );
     my @data = ();
     while(my $row = $sth->fetchrow_hashref()){

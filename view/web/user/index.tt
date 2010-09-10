@@ -49,12 +49,23 @@ function setMarker(map,tweets){
             return ;
         }
 
+        var num =tweets.length;
         var tweet = tweets.shift();
         $('#tweet_body').text(tweet.text);
         $('#created_at').text(tweet.created_at);
+        var icon = '/static/image/p-00'+ num + '.gif';
+
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng( tweet.lat ,tweet.lon ),
+            zIndex : 10 - num,
             map: map, 
+            icon: new google.maps.MarkerImage(
+                    icon,
+                    new google.maps.Size(15, 15),
+                    new google.maps.Point(0,0),  
+                    new google.maps.Point(15,15), 
+                    new google.maps.Size(15, 15)
+                 ),
             title: tweet.created_at
         });
 
