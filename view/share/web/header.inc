@@ -14,7 +14,7 @@
         <h2>
         <a href="http://twitter.com/[% config.twitter_list.owner %]/[% config.twitter_list.list_id %]/" target="_blank">[% config.twitter_list.owner %]/[% config.twitter_list.list_id %]<a/>
         [% IF config.twitter_extra_members %]
-        +[% config.twitter_extra_members.size %]( [% FOREACH  member IN config.twitter_extra_members %]<a href="http://twitter.com/[% member %]/" target="_blank">[% member %]</a> [% END %]
+        +[% config.twitter_extra_members.size %]( [% FOREACH  member IN config.twitter_extra_members %]<a href="/user/[% member %]/">[% member %]</a> [% END %]
         )
         [% END %]
         </h2>

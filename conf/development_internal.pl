@@ -2,6 +2,9 @@
     default => {
         'middlewares' => [
         {
+            'module' => 'Plack::Middleware::AccessLog',
+        },
+        {
             'module' => 'Plack::Middleware::StackTrace',
         },
         {
