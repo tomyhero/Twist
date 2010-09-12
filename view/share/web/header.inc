@@ -10,7 +10,7 @@
 <div id="header-wrapper">
     <div id="header">
         <div id="logo">
-        <h1><a href="/">Twist</a></h1>
+        <h1><a href="/"><img src="/static/image/twist_logo.png" alt="Twist" /></a></h1>
         <h2>
         <a href="http://twitter.com/[% config.twitter_list.owner %]/[% config.twitter_list.list_id %]/" target="_blank">[% config.twitter_list.owner %]/[% config.twitter_list.list_id %]<a/>
         [% IF config.twitter_extra_members %]
